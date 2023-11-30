@@ -20,9 +20,10 @@ See `includes\example.php` to usage.
 ### How can I get my settings?
 You can use the helper function: `wpsf_get_option`.
 
-Example: 
+Example:
+``````
 $siteDescription = wpsf_get_option('your_field_name', 'Your Default Data');
-
+``````
 
 ## Changelog
 
