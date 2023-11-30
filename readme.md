@@ -28,6 +28,4 @@ $siteDescription = wpsf_get_option('your_field_name', 'Your Default Data');
 ``````
 
 ## Changelog
-
-### 1.0
-* Initial Release.
+https://github.com/yakupseymen/wpsf/releases
