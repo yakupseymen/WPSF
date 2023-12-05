@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Class WPSF_Core
+ * Class WPSF_Settings
  *
  * Configure the plugin settings page.
  */
-class WPSF_Core {
+class WPSF_Settings {
 
 	/**
 	 * Capability required by the user to access the My Plugin menu entry.
@@ -423,4 +423,4 @@ class WPSF_Core {
 
 }
 
-new WPSF_Core();
+new WPSF_Settings();
