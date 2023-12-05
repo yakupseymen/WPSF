@@ -5,6 +5,7 @@ Create a custom settings page for your plugin or theme easily!
 ## Features
 * Register Settings Page
 * Register Settings SubPage
+* Register Custom Fields to Taxonomies
 * Get data easily.
 
 ## Installation
