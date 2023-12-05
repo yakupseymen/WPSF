@@ -1,5 +1,7 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 /**
  * Class WPSF_Settings
  *
@@ -423,4 +425,6 @@ class WPSF_Settings {
 
 }
 
-new WPSF_Settings();
+if ( class_exists('WPSF_Settings') ) {
+	new WPSF_Settings;
+};
