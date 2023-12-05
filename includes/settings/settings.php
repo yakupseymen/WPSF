@@ -427,4 +427,4 @@ class WPSF_Settings {
 
 if ( class_exists('WPSF_Settings') ) {
 	new WPSF_Settings;
-};
+}

@@ -1,6 +1,16 @@
 <?php 
 
 /**
+ * Table of contents
+ * 
+ * 1. Register Settings 
+ * 2. Register Taxonomy Settings
+ * 
+ */
+
+/**
+ * #1 Register Settings
+ * 
  * Set main options
  * option_name is the your main settings name. You'll get values with this name.
  */
@@ -288,3 +298,59 @@ add_action('wp_footer',function(){
     // echo wpsf_get_option( 'site_description', 'My Default Data' );
 });
 
+
+/**
+ * #2 Register Taxonomy Settings
+ * 
+ * Registers settings for custom taxonomies using the 'wpsf_register_taxonomy_settings' filter.
+ *
+ * This filter allows defining custom fields for taxonomies with specific types (e.g., text, checkbox, media).
+ *
+ * @param array $settings An associative array containing taxonomy settings and their respective fields.
+ *                        Format: $settings['taxonomy_name'] = [ fields ];
+ *                        Each field contains 'label', 'id', and 'type' keys.
+ *                        Available types: 'media', 'checkbox', 'radio', 'select', 'textarea', 'wysiwyg', 'pages', 'categories', 'users'.
+ *
+ * @return array The modified array of taxonomy settings with added fields.
+ */
+add_filter( 'wpsf_register_taxonomy_settings', function( $settings ){
+
+    // Define taxonomy settings and associated fields
+    $settings['post_tag'] = [
+        [
+            'label' => 'Text Field',
+            'id' => 'text_field',
+            'type' => 'text',
+        ],
+        [
+            'label' => 'Checkbox',
+            'id' => 'checkbox_1',
+            'type' => 'checkbox',
+        ],
+        [
+            'label' => 'Media',
+            'id' => 'media',
+            'type' => 'media',
+        ],
+        // Add more fields as needed for 'post_tag' or other taxonomies
+    ];
+
+    return $settings;
+
+    // How can you get the datas?
+    // Get the current term/tag ID
+    $term_id = 25; // Replace this with the actual term/tag ID
+
+    // Get the field data for 'text_field'
+    $text_field_value = get_term_meta($term_id, 'text_field', true);
+
+    // Get the field data for 'checkbox_1'
+    $checkbox_value = get_term_meta($term_id, 'checkbox_1', true);
+
+    // Get the field data for 'media' (assuming it's an attachment ID)
+    $media_id = get_term_meta($term_id, 'media', true);
+    $media_url = wp_get_attachment_url($media_id);
+    
+    // Now you have the values of these custom fields associated with the specific term/tag.
+
+}, 20 );
