@@ -313,5 +313,5 @@ class WPSF_Taxonomies {
 }
 
 if ( class_exists('WPSF_Taxonomies')) {
-	new WPSF_Taxonomies;
+	//new WPSF_Taxonomies;
 }

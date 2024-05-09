@@ -126,7 +126,8 @@ final class WPSF {
 
     public function include_files() {
 
-		require_once WPSF_PATH . 'includes/settings/settings.php';
+		new \WPSF\Core\Admin_Page;
+
 		require_once WPSF_PATH . 'includes/taxonomies/taxonomies.php';
 		
     }

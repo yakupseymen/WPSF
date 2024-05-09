@@ -27,8 +27,7 @@ define( 'WPSF_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WPSF_URL', plugin_dir_url( __FILE__ ) );
 define( 'WPSF_VERSION', get_file_data( __FILE__, array('Version' => 'Version'), false)['Version'] );
 
-
-// Load framework
+require_once WPSF_PATH . 'includes/autoloader.php';
 require_once WPSF_PATH . 'includes/framework.php';
 
 // Load example 

@@ -1,88 +1,17 @@
 <?php 
 
-/**
- * Table of contents
- * 
- * 1. Register Settings 
- * 2. Register Taxonomy Settings
- * 
- */
+$prefix = 'wpsf_options';
 
-/**
- * #1 Register Settings
- * 
- * Set main options
- * option_name is the your main settings name. You'll get values with this name.
- */
-add_filter( 'wpsf_register_options', function(){
-    $options = [
-        'option_name' => 'my_options',
-    ];
-
-    return $options;
-} );
-
-/**
- * 
- * Register admin menu page & settings
- * 
- */
-add_filter( 'wpsf_register_settings', function( $settings ){
-
-    /**
-     * Register an Admin Page with the following configuration:
-     *
-     * - Page Title: Settings
-     * - Menu Title: Menu Title
-     * - Menu Slug (URL): my-settings
-     * - Menu Icon: dashicons-admin-settings (Menu Icon (icon will be invalid if it was not called first))
-     * - Menu Position: 2 (Dashboard)
-     *   Available Positions:
-     *     - 2: Dashboard
-     *     - 4: Separator
-     *     - 5: Posts
-     *     - 10: Media
-     *     - 15: Links
-     *     - 20: Pages
-     *     - 25: Comments
-     *     - 59: Separator
-     *     - 60: Appearance
-     *     - 65: Plugins
-     *     - 70: Users
-     *     - 75: Tools
-     *     - 80: Settings
-     *     - 99: Separator
-     */
-    $page = [
-        'page_title' => __('My Settings', 'wpsf'),
-        'menu_title' => __('My Settings', 'wpsf'),
-        'menu_slug' => 'my-settings',
-        'icon' => 'dashicons-admin-settings',
-        'position' => '2',
-    ];
-
-    /**
-     * This PHP array represents a structured configuration for organizing settings and fields.
-     *
-     * $tabs is an associative array with tabs as keys, each containing:
-     *   - 'label': The display label for the tab.
-     *   - 'sections': An array of sections within the tab, each section having:
-     *     - 'label': The display label for the section.
-     *     - 'fields': An array of fields within the section, where each field includes:
-     *       - 'id': Unique identifier for the field.
-     *       - 'label': The display label for the field.
-     *       - 'description': A description or additional information for the field.
-     *       - 'type': The type of the field (e.g., 'text', 'url').
-     *       - 'options': An array of options for select input 
-     *
-     * This structure is designed to organize and manage settings and fields for a developer-oriented application.
-     */
-    $tabs = [
+\WPSF\Core\Admin_Page::create( $prefix, [
+    'page_title' => esc_html__( 'My Settings', 'wpsf' ),
+    'menu_title' => esc_html__( 'My Settings', 'wpsf' ),
+    'menu_slug' => 'wpsf',
+    'fields' => [
 		'general' => [
-            'label' => __( 'General', 'wpsf' ),
+            'label' => esc_html__( 'General', 'wpsf' ),
             'sections' => [
                 'general' => [
-                   'label' => __( 'General Settings', 'wpsf' ),
+                   'label' => esc_html__( 'General Settings', 'wpsf' ),
                    'fields' => [
                         [
                             'id' => 'field_one',
@@ -93,7 +22,7 @@ add_filter( 'wpsf_register_settings', function( $settings ){
                    ]
                 ],
                 'api' => [
-                   'label' => __( 'API Keys', 'wpsf' ),
+                   'label' => esc_html__( 'API Keys', 'wpsf' ),
                    'fields' => [
                         [
                             'id' => 'my_api_key',
@@ -106,101 +35,40 @@ add_filter( 'wpsf_register_settings', function( $settings ){
             ]
         ],
         'page_options' => [
-            'label' => __( 'Page Options', 'wpsf' ),
+            'label' => esc_html__( 'Page Options', 'wpsf' ),
             'sections' =>[
                 'discussion' => [
-                   'label' => __( 'Discussion', 'wpsf' ),
+                   'label' => esc_html__( 'Discussion', 'wpsf' ),
                    'fields' => [
                         [
                             'id' => 'enable_comments',
-                            'label' => __( 'Enable comments?', 'wpsf' ),
-                            'description' => __( 'Enable comments on the single pages?', 'wpsf' ),
+                            'label' => esc_html__( 'Enable comments?', 'wpsf' ),
+                            'description' => esc_html__( 'Enable comments on the single pages?', 'wpsf' ),
                             'type' => 'checkbox',
                         ],
                         [
                             'id' => 'page_layout',
-                            'label' => __( 'Page Layout', 'wpsf' ),
-                            'description' => __( 'Select page layout.', 'wpsf' ),
+                            'label' => esc_html__( 'Page Layout', 'wpsf' ),
+                            'description' => esc_html__( 'Select page layout.', 'wpsf' ),
                             'type' => 'select',
                             'options' => [
-                                'boxed' => __( 'Boxed', 'wpsf' ),
-                                'full-width' => __( 'Full Width', 'wpsf' ),
+                                'boxed' => esc_html__( 'Boxed', 'wpsf' ),
+                                'full-width' => esc_html__( 'Full Width', 'wpsf' ),
                             ]
                         ],
                    ]
                 ]
             ]
         ]
-	];
+	]
+] );
 
-    /**
-     * Combine the previously defined $page and $tabs arrays into a $settings array
-     * and return it for further usage.
-     */
-    $settings[] = [
-        'page' => $page,
-        'tabs' => $tabs
-    ];
-
-    return $settings;
-}, 20 );
-
-/**
- * 
- * Register admin submenu page & settings
- * Note: If you want to convert to main page, change the filter order (example 30 to 10)
- */
-add_filter( 'wpsf_register_settings', function( $settings ){
-
-    /**
-     * Register an Admin Page with the following configuration:
-     *
-     * - Page Title: Settings
-     * - Menu Title: Menu Title
-     * - Menu Slug (URL): my-settings
-     * - Menu Icon: dashicons-admin-settings (Menu Icon (icon will be invalid if it was not called first))
-     * - Menu Position: 2 (Dashboard)
-     *   Available Positions:
-     *     - 2: Dashboard
-     *     - 4: Separator
-     *     - 5: Posts
-     *     - 10: Media
-     *     - 15: Links
-     *     - 20: Pages
-     *     - 25: Comments
-     *     - 59: Separator
-     *     - 60: Appearance
-     *     - 65: Plugins
-     *     - 70: Users
-     *     - 75: Tools
-     *     - 80: Settings
-     *     - 99: Separator
-     */
-    $page = [
-        'page_title' => __( 'Advanced', 'wpsf' ), 
-        'menu_title' => __( 'Advanced', 'wpsf' ),
-        'menu_slug' => 'my-advanced-settings',
-        'icon' => 'dashicons-admin-settings',
-        'position' => '2',
-    ];
-
-    /**
-     * This PHP array represents a structured configuration for organizing settings and fields.
-     *
-     * $tabs is an associative array with tabs as keys, each containing:
-     *   - 'label': The display label for the tab.
-     *   - 'sections': An array of sections within the tab, each section having:
-     *     - 'label': The display label for the section.
-     *     - 'fields': An array of fields within the section, where each field includes:
-     *       - 'id': Unique identifier for the field.
-     *       - 'label': The display label for the field.
-     *       - 'description': A description or additional information for the field.
-     *       - 'type': The type of the field (e.g., 'text', 'url').
-     *       - 'options': An array of options for select input 
-     *
-     * This structure is designed to organize and manage settings and fields for a developer-oriented application.
-     */
-    $tabs = [
+\WPSF\Core\Admin_Page::create( $prefix, [
+    'page_title' => __( 'Advanced', 'wpsf' ), 
+    'menu_title' => __( 'Advanced', 'wpsf' ),
+    'menu_slug' => 'my-advanced-settings',
+    'parent' => 'wpsf',
+    'fields' => [
 		'general' => [
             'label' => __( 'Post', 'wpsf' ),
             'sections' => [
@@ -256,19 +124,34 @@ add_filter( 'wpsf_register_settings', function( $settings ){
                 ]
             ]
         ]
-	];
+	]
+] );
 
-    /**
-     * Combine the previously defined $page and $tabs arrays into a $settings array
-     * and return it for further usage.
-     */
-    $settings[] = [
-        'page' => $page,
-        'tabs' => $tabs
-    ];
 
-    return $settings;
-}, 30 );
+\WPSF\Core\Admin_Page::create( $prefix . '_two', [
+    'page_title' => esc_html__( 'My Settings Two', 'wpsf' ),
+    'menu_title' => esc_html__( 'My Settings Two', 'wpsf' ),
+    'position' => 3,
+    'menu_slug' => 'wpsf_two',
+    'fields' => [
+		'general' => [
+            'label' => esc_html__( 'General', 'wpsf' ),
+            'sections' => [
+                'general' => [
+                   'label' => esc_html__( 'General Settings', 'wpsf' ),
+                   'fields' => [
+                        [
+                            'id' => 'field_ones',
+                            'label' => __( 'meta one', 'wpsf' ),
+                            'description' => __( 'This is a demo option', 'wpsf' ),
+                            'type' => 'text',
+                        ],
+                   ]
+                ],
+            ]
+        ],
+	]
+] );
 
 
 /**
