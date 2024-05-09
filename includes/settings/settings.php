@@ -260,7 +260,7 @@ class WPSF_Settings {
 					value="<?php echo isset( $options[ $field['id'] ] ) ? esc_attr( $options[ $field['id'] ] ) : ''; ?>"
 				>
 				<p class="description">
-					<?php echo $field['description']; ?> 
+					<?php echo wp_kses_post( $field['description'] ); ?> 
 				</p>
 				<?php
 				break;
@@ -276,7 +276,7 @@ class WPSF_Settings {
 					<?php echo isset( $options[ $field['id'] ] ) ? ( checked( $options[ $field['id'] ], 1, false ) ) : ( '' ); ?>
 				>
 				<p class="description">
-					<?php echo $field['description']; ?>
+					<?php echo wp_kses_post( $field['description'] ); ?>
 				</p>
 				<?php
 				break;
@@ -289,7 +289,7 @@ class WPSF_Settings {
 					name="<?php echo esc_attr( sprintf( '%s[%s]', $this->options['option_name'], $field['id'] ) );?>"
 				><?php echo isset( $options[ $field['id'] ] ) ? esc_attr( $options[ $field['id'] ] ) : ''; ?></textarea>
 				<p class="description">
-					<?php echo $field['description']; ?>
+					<?php echo wp_kses_post( $field['description'] ); ?>
 				</p>
 				<?php
 				break;
@@ -302,15 +302,15 @@ class WPSF_Settings {
 					name="<?php echo esc_attr( sprintf( '%s[%s]', $this->options['option_name'], $field['id'] ) );?>"
 				>
 					<?php foreach( $field['options'] as $key => $option ) { ?>
-						<option value="<?php echo $key; ?>" 
+						<option value="<?php echo esc_attr( $key ); ?>" 
 							<?php echo isset( $options[ $field['id'] ] ) ? ( selected( $options[ $field['id'] ], $key, false ) ) : ( '' ); ?>
 						>
-							<?php echo $option; ?>
+							<?php echo esc_html( $option ); ?>
 						</option>
 					<?php } ?>
 				</select>
 				<p class="description">
-					<?php echo $field['description']; ?>
+					<?php echo wp_kses_post( $field['description'] ); ?>
 				</p>
 				<?php
 				break;
@@ -325,7 +325,7 @@ class WPSF_Settings {
 					value="<?php echo isset( $options[ $field['id'] ] ) ? esc_attr( $options[ $field['id'] ] ) : ''; ?>"
 				>
 				<p class="description">
-					<?php echo $field['description']; ?>
+					<?php echo wp_kses_post( $field['description'] ); ?>
 				</p>
 				<?php
 				break;
@@ -352,7 +352,7 @@ class WPSF_Settings {
 					value="<?php echo isset( $options[ $field['id'] ] ) ? esc_attr( $options[ $field['id'] ] ) : ''; ?>"
 				>
 				<p class="description">
-					<?php echo $field['description']; ?>
+					<?php echo wp_kses_post( $field['description'] ); ?>
 				</p>
 				<?php
 				break;
@@ -367,7 +367,7 @@ class WPSF_Settings {
 					value="<?php echo isset( $options[ $field['id'] ] ) ? esc_attr( $options[ $field['id'] ] ) : ''; ?>"
 				>
 				<p class="description">
-					<?php echo $field['description']; ?>
+					<?php echo wp_kses_post( $field['description'] ); ?>
 				</p>
 				<?php
 				break;
@@ -382,7 +382,7 @@ class WPSF_Settings {
 					value="<?php echo isset( $options[ $field['id'] ] ) ? esc_attr( $options[ $field['id'] ] ) : ''; ?>"
 				>
 				<p class="description">
-					<?php echo $field['description']; ?>
+					<?php echo wp_kses_post( $field['description'] ); ?>
 				</p>
 				<?php
 				break;
@@ -397,7 +397,7 @@ class WPSF_Settings {
 					value="<?php echo isset( $options[ $field['id'] ] ) ? esc_attr( $options[ $field['id'] ] ) : ''; ?>"
 				>
 				<p class="description">
-					<?php echo $field['description']; ?>
+					<?php echo wp_kses_post( $field['description'] ); ?>
 				</p>
 				<?php
 				break;

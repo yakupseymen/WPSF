@@ -112,6 +112,7 @@ class WPSF_Taxonomies {
 			$input = $this->generate_meta_field_input( $meta_field, $meta_value );
 			$output .= '<div class="form-field">'.$this->format_rows( $label, $input ).'</div>';
 		}
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $output;
 	}
 
@@ -131,6 +132,7 @@ class WPSF_Taxonomies {
 			$input = $this->generate_meta_field_input( $meta_field, $meta_value );
 			$output .= $this->format_rows( $label, $input );
 		}
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '<div class="form-field">' . $output . '</div>';
 	}
 
@@ -271,6 +273,7 @@ class WPSF_Taxonomies {
                     'id' => $meta_field['id'],
                     'show_option_none' => 'Select a page',
                 );
+                // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                 $input = wp_dropdown_pages($pagesargs);
                 break;
             case 'categories':
