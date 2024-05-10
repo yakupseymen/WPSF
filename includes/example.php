@@ -129,33 +129,12 @@ $prefix = 'wpsf_options';
 	]
 ] );
 
-/**
- * Usage of the 'wpsf_get_option' function:
- *
- * The 'wpsf_get_option' function is used to retrieve option values from the WPSF instance.
- * Here's how you can use it:
- *
- * - Call the 'wpsf_get_option' function with two parameters:
- *   1. $option_name: The name of the option you want to retrieve.
- *   2. $default (optional): The default value to return if the option is not set.
- *
- * Example:
- * Suppose you want to retrieve the 'site_description' option, and if it's not set, you want to
- * provide a default value of 'Default Site Description':
- *
- * $siteDescription = wpsf_get_option('site_description', 'Default Site Description');
- *
- * In this example, the 'wpsf_get_option' function is called with 'site_description' as the option name
- * and 'Default Site Description' as the default value. If 'site_description' is not set, the function
- * will return the default value.
- *
- * You can replace 'site_description' and 'Default Site Description' with your specific option name
- * and default value as needed.
- */
-add_action('wp_footer',function(){
-    // echo wpsf_get_option( 'site_description', 'My Default Data' );
-});
 
+add_action('wp_footer',function(){
+    $prefix = 'wpsf_options';
+    $options = get_option( $prefix );
+    $field_one =  $options['field_one']; // print this if you want
+});
 
 /**
  * #2 Register Taxonomy Settings
