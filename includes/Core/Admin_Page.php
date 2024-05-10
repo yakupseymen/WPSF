@@ -12,7 +12,6 @@ class Admin_Page {
 
     private static $capability = 'manage_options';
     private static $args = array();
-    private static $settings = array();
     private static $page_id;
 
     function __construct() {
@@ -41,9 +40,8 @@ class Admin_Page {
     }
 
     function admin_menu() {
-        $args_array = self::$args;
 
-        foreach ( $args_array as $args ) {
+        foreach ( self::$args as $args ) {
             $parent = $args['parent'] ?? '';
             if ( !$parent ) {
                 add_menu_page(
