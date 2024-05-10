@@ -125,28 +125,17 @@ final class WPSF {
 	}
 
     public function include_files() {
-
-		require_once WPSF_PATH . 'includes/settings/settings.php';
-		require_once WPSF_PATH . 'includes/taxonomies/taxonomies.php';
-		
+		new \WPSF\Core\Admin_Page;
+		new \WPSF\Core\Taxonomy;
     }
 
-	function get_option( $option_name, $default = null ){
-		$wpsf_option_name = get_option( 'wpsf_option_name' );
-
-		if ( ! $wpsf_option_name ) return;
-
-		$options = get_option( $wpsf_option_name );
-
-		if ( isset( $options[$option_name] ) ) {
-			if ( empty( $options[$option_name] ) && !empty( $default ) ) {
-				return $default;
-			}
-			return $options[$option_name];
-		}
-
+	public static function createAdminPage( $prefix, $args ) {
+		\WPSF\Core\Admin_Page::create( $prefix, $args );
 	}
 
+	public static function createTaxonomyFields( $prefix, $args ) {
+		\WPSF\Core\Taxonomy::create( $prefix, $args );
+	}
     
 } // class
 WPSF::instance();
@@ -160,18 +149,3 @@ register_activation_hook( __FILE__, function(){
 register_deactivation_hook( __FILE__, function(){
     flush_rewrite_rules();
 } );
-
-/**
- * Get your opitons.
- * Usage of the 'wpsf_get_option' function:
- *
- * - Call the 'wpsf_get_option' function with two parameters:
- *   1. $option_name: The name of the option you want to retrieve.
- *   2. $default (optional): The default value to return if the option is not set.
- * 
- */
-if ( ! function_exists( 'wpsf_get_option' ) ) {
-	function wpsf_get_option( $option_name, $default = null ){
-		return WPSF::instance()->get_option( $option_name, $default );
-	}
-}

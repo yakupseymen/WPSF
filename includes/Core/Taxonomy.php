@@ -1,57 +1,43 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+namespace WPSF\Core;
 
-/**
- * Class WPSF_Taxonomies
- *
- * Handles the creation and management of custom taxonomy fields.
- * 
- * @since 1.1
- */
-class WPSF_Taxonomies {
+if ( ! defined( 'ABSPATH' ) ) {
+    exit();
+}
 
-    /**
-     * @var array Stores meta fields for taxonomies.
-     * 
-     * @since 1.1
-     */
-    private $meta_fields;
+use WPSF\Core\Field;
 
-    /**
-     * WPSF_Taxonomies constructor.
-     *
-     * Initializes the class and sets up actions for taxonomy fields.
-     * 
-     * @since 1.1
-     */
-	public function __construct() {
+class Taxonomy {
 
-        // Retrieve meta fields defined through filters
-        $this->meta_fields = apply_filters( 'wpsf_register_taxonomy_settings', [] );
+    private static $args = array();
 
+    function __construct() {
         // Check if in admin and meta fields exist
-		if ( is_admin() && !empty( $this->meta_fields ) ) {
+        if ( is_admin() && !empty( self::$args ) ) {
             // Loop through registered taxonomies
-            foreach( $this->meta_fields as $taxonomy => $values ) {
+            foreach( self::$args as $taxonomy => $values ) {
                 add_action( $taxonomy . '_add_form_fields', array( $this, 'create_fields' ), 10, 2 );
                 add_action( $taxonomy . '_edit_form_fields', array( $this, 'edit_fields' ),  10, 2 );
                 add_action( 'created_' . $taxonomy, array( $this, 'save_fields' ), 10, 1 );
                 add_action( 'edited_' . $taxonomy,  array( $this, 'save_fields' ), 10, 1 );
             }
-
+ 
             // Additional actions for media fields
-			add_action( 'admin_footer', array( $this, 'media_fields' ) );
-			add_action( 'admin_enqueue_scripts', 'wp_enqueue_media' );
-		}
-	}
-    
-    /**
-     * Enqueues necessary scripts for media fields in the admin section.
-     * 
-     * @since 1.1
-     */
-	public function media_fields() {
+            add_action( 'admin_footer', array( $this, 'media_fields' ) );
+            add_action( 'admin_enqueue_scripts', 'wp_enqueue_media' );
+        }
+    }
+
+    public static function create( $taxonomy = 'post_tag', $args = array() ){
+
+        if ( isset( self::$args[$taxonomy] ) ) {
+            wp_die( "WPSF: You used same option name twice: <code>$taxonomy</code>" );
+        }
+        self::$args[$taxonomy] = $args;
+    }
+
+    public function media_fields() {
         // JavaScript functionality for media fields
 		?><script>
 			jQuery(document).ready(function($){
@@ -92,16 +78,9 @@ class WPSF_Taxonomies {
 		</script><?php
 	}
 
-    /**
-     * Generates and outputs fields for creating a new taxonomy term.
-     *
-     * @param string $taxonomy The taxonomy slug.
-     * 
-     * @since 1.1
-     */
 	public function create_fields( $taxonomy ) {
 		$output = '';
-		foreach ( $this->meta_fields[$taxonomy] as $meta_field ) {
+		foreach ( self::$args[$taxonomy] as $meta_field ) {
 			$label = '<label for="' . $meta_field['id'] . '">' . $meta_field['label'] . '</label>';
             $meta_value = '';
 			if ( empty( $meta_value ) ) {
@@ -116,17 +95,9 @@ class WPSF_Taxonomies {
 		echo $output;
 	}
 
-    /**
-     * Generates and outputs fields for editing an existing taxonomy term.
-     *
-     * @param object $term     The term being edited.
-     * @param string $taxonomy The taxonomy slug.
-     * 
-     * @since 1.1
-     */
-	public function edit_fields( $term, $taxonomy ) {
+    public function edit_fields( $term, $taxonomy ) {
 		$output = '';
-		foreach ( $this->meta_fields[$taxonomy] as $meta_field ) {
+		foreach ( self::$args[$taxonomy] as $meta_field ) {
 			$label = '<label for="' . $meta_field['id'] . '">' . $meta_field['label'] . '</label>';
 			$meta_value = get_term_meta( $term->term_id, $meta_field['id'], true );
 			$input = $this->generate_meta_field_input( $meta_field, $meta_value );
@@ -136,30 +107,9 @@ class WPSF_Taxonomies {
 		echo '<div class="form-field">' . $output . '</div>';
 	}
 
-    /**
-     * Formats the label and input HTML into a table row.
-     *
-     * @param string $label The HTML label for the field.
-     * @param string $input The HTML input for the field.
-     *
-     * @return string The formatted table row containing the label and input.
-     * 
-     * @since 1.1
-     */
-	public function format_rows( $label, $input ) {
-		return '<tr class="form-field"><th>'.$label.'</th><td>'.$input.'</td></tr>';
-	}
-
-    /**
-     * Saves the submitted field values when creating or editing a taxonomy term.
-     *
-     * @param int $term_id The ID of the term being saved.
-     * 
-     * @since 1.1
-     */
-	public function save_fields( $term_id ) {
+    public function save_fields( $term_id ) {
         $taxonomy = get_term($term_id)->taxonomy;
-		foreach ( $this->meta_fields[$taxonomy] as $meta_field ) {
+		foreach ( self::$args[$taxonomy] as $meta_field ) {
 			if ( isset( $_POST[ $meta_field['id'] ] ) ) {
 				switch ( $meta_field['type'] ) {
 					case 'email':
@@ -176,16 +126,10 @@ class WPSF_Taxonomies {
 		}
 	}
 
-    /**
-     * Generates the HTML input for a specific meta field type.
-     *
-     * @param array $meta_field The meta field data.
-     * @param mixed $meta_value The value of the meta field.
-     *
-     * @return string The HTML input for the meta field.
-     * 
-     * @since 1.1
-     */
+    public function format_rows( $label, $input ) {
+		return '<tr class="form-field"><th>'.$label.'</th><td>'.$input.'</td></tr>';
+	}
+
     public function generate_meta_field_input( $meta_field, $meta_value ) {
 
         switch ( $meta_field['type'] ) {
@@ -310,8 +254,4 @@ class WPSF_Taxonomies {
 
         return $input;
     }
-}
-
-if ( class_exists('WPSF_Taxonomies')) {
-	new WPSF_Taxonomies;
 }

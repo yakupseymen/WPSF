@@ -1,343 +1,229 @@
 <?php 
 
-/**
- * Table of contents
- * 
- * 1. Register Settings 
- * 2. Register Taxonomy Settings
- * 
- */
-
-/**
- * #1 Register Settings
- * 
- * Set main options
- * option_name is the your main settings name. You'll get values with this name.
- */
-add_filter( 'wpsf_register_options', function(){
-    $options = [
-        'option_name' => 'my_options',
-    ];
-
-    return $options;
-} );
-
-/**
- * 
- * Register admin menu page & settings
- * 
- */
-add_filter( 'wpsf_register_settings', function( $settings ){
-
-    /**
-     * Register an Admin Page with the following configuration:
-     *
-     * - Page Title: Settings
-     * - Menu Title: Menu Title
-     * - Menu Slug (URL): my-settings
-     * - Menu Icon: dashicons-admin-settings (Menu Icon (icon will be invalid if it was not called first))
-     * - Menu Position: 2 (Dashboard)
-     *   Available Positions:
-     *     - 2: Dashboard
-     *     - 4: Separator
-     *     - 5: Posts
-     *     - 10: Media
-     *     - 15: Links
-     *     - 20: Pages
-     *     - 25: Comments
-     *     - 59: Separator
-     *     - 60: Appearance
-     *     - 65: Plugins
-     *     - 70: Users
-     *     - 75: Tools
-     *     - 80: Settings
-     *     - 99: Separator
-     */
-    $page = [
-        'page_title' => __('My Settings', 'wpsf'),
-        'menu_title' => __('My Settings', 'wpsf'),
-        'menu_slug' => 'my-settings',
-        'icon' => 'dashicons-admin-settings',
-        'position' => '2',
-    ];
-
-    /**
-     * This PHP array represents a structured configuration for organizing settings and fields.
-     *
-     * $tabs is an associative array with tabs as keys, each containing:
-     *   - 'label': The display label for the tab.
-     *   - 'sections': An array of sections within the tab, each section having:
-     *     - 'label': The display label for the section.
-     *     - 'fields': An array of fields within the section, where each field includes:
-     *       - 'id': Unique identifier for the field.
-     *       - 'label': The display label for the field.
-     *       - 'description': A description or additional information for the field.
-     *       - 'type': The type of the field (e.g., 'text', 'url').
-     *       - 'options': An array of options for select input 
-     *
-     * This structure is designed to organize and manage settings and fields for a developer-oriented application.
-     */
-    $tabs = [
-		'general' => [
-            'label' => __( 'General', 'wpsf' ),
-            'sections' => [
-                'general' => [
-                   'label' => __( 'General Settings', 'wpsf' ),
-                   'fields' => [
-                        [
-                            'id' => 'field_one',
-                            'label' => __( 'Field one', 'wpsf' ),
-                            'description' => __( 'This is a demo option', 'wpsf' ),
-                            'type' => 'text',
-                        ],
-                   ]
-                ],
-                'api' => [
-                   'label' => __( 'API Keys', 'wpsf' ),
-                   'fields' => [
-                        [
-                            'id' => 'my_api_key',
-                            'label' => __( 'Framework API Key', 'wpsf' ),
-                            'description' => __( 'This is a demo option', 'wpsf' ),
-                            'type' => 'text',
-                        ],
-                   ]
+if ( class_exists( 'WPSF' ) ) {
+    // Create admin page: My Settings
+    $prefix = 'wpsf_options';
+    WPSF::createAdminPage( $prefix, [
+        'page_title' => esc_html__( 'My Settings', 'wpsf' ),
+        'menu_title' => esc_html__( 'My Settings', 'wpsf' ),
+        'menu_slug' => 'wpsf',
+        'fields' => [
+            'general' => [
+                'label' => esc_html__( 'General', 'wpsf' ),
+                'sections' => [
+                    'general' => [
+                       'label' => esc_html__( 'General Settings', 'wpsf' ),
+                       'fields' => [
+                            [
+                                'id' => 'field_one',
+                                'label' => __( 'Field one', 'wpsf' ),
+                                'description' => __( 'This is a demo option', 'wpsf' ),
+                                'type' => 'text',
+                            ],
+                       ]
+                    ],
+                    'api' => [
+                       'label' => esc_html__( 'API Keys', 'wpsf' ),
+                       'fields' => [
+                            [
+                                'id' => 'my_api_key',
+                                'label' => __( 'Framework API Key', 'wpsf' ),
+                                'description' => __( 'This is a demo option', 'wpsf' ),
+                                'type' => 'text',
+                            ],
+                       ]
+                    ]
                 ]
-            ]
-        ],
-        'page_options' => [
-            'label' => __( 'Page Options', 'wpsf' ),
-            'sections' =>[
-                'discussion' => [
-                   'label' => __( 'Discussion', 'wpsf' ),
-                   'fields' => [
-                        [
-                            'id' => 'enable_comments',
-                            'label' => __( 'Enable comments?', 'wpsf' ),
-                            'description' => __( 'Enable comments on the single pages?', 'wpsf' ),
-                            'type' => 'checkbox',
-                        ],
-                        [
-                            'id' => 'page_layout',
-                            'label' => __( 'Page Layout', 'wpsf' ),
-                            'description' => __( 'Select page layout.', 'wpsf' ),
-                            'type' => 'select',
-                            'options' => [
-                                'boxed' => __( 'Boxed', 'wpsf' ),
-                                'full-width' => __( 'Full Width', 'wpsf' ),
-                            ]
-                        ],
-                   ]
+            ],
+            'page_options' => [
+                'label' => esc_html__( 'Page Options', 'wpsf' ),
+                'sections' =>[
+                    'discussion' => [
+                       'label' => esc_html__( 'Discussion', 'wpsf' ),
+                       'fields' => [
+                            [
+                                'id' => 'enable_comments',
+                                'label' => esc_html__( 'Enable comments?', 'wpsf' ),
+                                'description' => esc_html__( 'Enable comments on the single pages?', 'wpsf' ),
+                                'type' => 'checkbox',
+                            ],
+                            [
+                                'id' => 'page_layout',
+                                'label' => esc_html__( 'Page Layout', 'wpsf' ),
+                                'description' => esc_html__( 'Select page layout.', 'wpsf' ),
+                                'type' => 'select',
+                                'options' => [
+                                    'boxed' => esc_html__( 'Boxed', 'wpsf' ),
+                                    'full-width' => esc_html__( 'Full Width', 'wpsf' ),
+                                ]
+                            ],
+                       ]
+                    ]
                 ]
             ]
         ]
-	];
-
-    /**
-     * Combine the previously defined $page and $tabs arrays into a $settings array
-     * and return it for further usage.
-     */
-    $settings[] = [
-        'page' => $page,
-        'tabs' => $tabs
-    ];
-
-    return $settings;
-}, 20 );
-
-/**
- * 
- * Register admin submenu page & settings
- * Note: If you want to convert to main page, change the filter order (example 30 to 10)
- */
-add_filter( 'wpsf_register_settings', function( $settings ){
-
-    /**
-     * Register an Admin Page with the following configuration:
-     *
-     * - Page Title: Settings
-     * - Menu Title: Menu Title
-     * - Menu Slug (URL): my-settings
-     * - Menu Icon: dashicons-admin-settings (Menu Icon (icon will be invalid if it was not called first))
-     * - Menu Position: 2 (Dashboard)
-     *   Available Positions:
-     *     - 2: Dashboard
-     *     - 4: Separator
-     *     - 5: Posts
-     *     - 10: Media
-     *     - 15: Links
-     *     - 20: Pages
-     *     - 25: Comments
-     *     - 59: Separator
-     *     - 60: Appearance
-     *     - 65: Plugins
-     *     - 70: Users
-     *     - 75: Tools
-     *     - 80: Settings
-     *     - 99: Separator
-     */
-    $page = [
-        'page_title' => __( 'Advanced', 'wpsf' ), 
-        'menu_title' => __( 'Advanced', 'wpsf' ),
+    ] );
+    
+    // Create admin submenu for 'My Settings'
+    $prefix = 'wpsf_advanced_options';
+    WPSF::createAdminPage( $prefix, [
+        'page_title' => esc_html__( 'Advanced', 'wpsf' ), 
+        'menu_title' => esc_html__( 'Advanced', 'wpsf' ),
         'menu_slug' => 'my-advanced-settings',
-        'icon' => 'dashicons-admin-settings',
-        'position' => '2',
-    ];
-
-    /**
-     * This PHP array represents a structured configuration for organizing settings and fields.
-     *
-     * $tabs is an associative array with tabs as keys, each containing:
-     *   - 'label': The display label for the tab.
-     *   - 'sections': An array of sections within the tab, each section having:
-     *     - 'label': The display label for the section.
-     *     - 'fields': An array of fields within the section, where each field includes:
-     *       - 'id': Unique identifier for the field.
-     *       - 'label': The display label for the field.
-     *       - 'description': A description or additional information for the field.
-     *       - 'type': The type of the field (e.g., 'text', 'url').
-     *       - 'options': An array of options for select input 
-     *
-     * This structure is designed to organize and manage settings and fields for a developer-oriented application.
-     */
-    $tabs = [
-		'general' => [
-            'label' => __( 'Post', 'wpsf' ),
-            'sections' => [
-                'general' => [
-                   'label' => __( 'General Settings', 'wpsf' ),
-                   'fields' => [
-                        [
-                            'id' => 'before_content',
-                            'label' => __( 'Before Content', 'wpsf' ),
-                            'description' => __( 'Add custom content before the post', 'wpsf' ),
-                            'type' => 'wysiwyg',
-                        ],
-                        [
-                            'id' => 'after_content',
-                            'label' => __( 'After Content', 'wpsf' ),
-                            'description' => __( 'Add custom content after the post', 'wpsf' ),
-                            'type' => 'wysiwyg',
-                        ],
-                   ]
-                ],
-                'style' => [
-                   'label' => __( 'Post Title Color' ),
-                   'fields' => [
-                        [
-                            'id' => 'post_title_color',
-                            'label' => __( 'Post Title Color', 'wpsf' ),
-                            'description' => __( 'Select a color', 'wpsf' ),
-                            'type' => 'color',
-                        ],
-                   ]
+        'parent' => 'wpsf',
+        'fields' => [
+            'general' => [
+                'label' => esc_html__( 'Post', 'wpsf' ),
+                'sections' => [
+                    'general' => [
+                       'label' => esc_html__( 'General Settings', 'wpsf' ),
+                       'fields' => [
+                            [
+                                'id' => 'before_content',
+                                'label' => esc_html__( 'Before Content', 'wpsf' ),
+                                'description' => esc_html__( 'Add custom content before the post', 'wpsf' ),
+                                'type' => 'wysiwyg',
+                            ],
+                            [
+                                'id' => 'after_content',
+                                'label' => esc_html__( 'After Content', 'wpsf' ),
+                                'description' => esc_html__( 'Add custom content after the post', 'wpsf' ),
+                                'type' => 'wysiwyg',
+                            ],
+                       ]
+                    ],
+                    'style' => [
+                       'label' => esc_html__( 'Post Title Color' ),
+                       'fields' => [
+                            [
+                                'id' => 'post_title_color',
+                                'label' => esc_html__( 'Post Title Color', 'wpsf' ),
+                                'description' => esc_html__( 'Select a color', 'wpsf' ),
+                                'type' => 'color',
+                            ],
+                       ]
+                    ]
                 ]
-            ]
-        ],
-        'seo' => [
-            'label' => 'SEO',
-            'sections' =>[
-                'general' => [
-                   'label' => __('General'),
-                   'fields' => [
-                        [
-                            'id' => 'site_title',
-                            'label' => __( 'Site Title', 'wpsf' ),
-                            'description' => __( 'Set site title', 'wpsf' ),
-                            'type' => 'text',
-                        ],
-                        [
-                            'id' => 'site_description',
-                            'label' => __( 'Site Description', 'wpsf' ),
-                            'description' => __( 'In a few words, explain what this site is about. Example: “Just another WordPress site.”', 'wpsf' ),
-                            'type' => 'textarea',
-                        ],
-                   ]
+            ],
+            'seo' => [
+                'label' => 'SEO',
+                'sections' =>[
+                    'general' => [
+                       'label' => esc_html__('General'),
+                       'fields' => [
+                            [
+                                'id' => 'site_title',
+                                'label' => esc_html__( 'Site Title', 'wpsf' ),
+                                'description' => esc_html__( 'Set site title', 'wpsf' ),
+                                'type' => 'text',
+                            ],
+                            [
+                                'id' => 'site_description',
+                                'label' => esc_html__( 'Site Description', 'wpsf' ),
+                                'description' => esc_html__( 'In a few words, explain what this site is about. Example: “Just another WordPress site.”', 'wpsf' ),
+                                'type' => 'textarea',
+                            ],
+                       ]
+                    ]
                 ]
             ]
         ]
-	];
-
-    /**
-     * Combine the previously defined $page and $tabs arrays into a $settings array
-     * and return it for further usage.
-     */
-    $settings[] = [
-        'page' => $page,
-        'tabs' => $tabs
-    ];
-
-    return $settings;
-}, 30 );
-
-
-/**
- * Usage of the 'wpsf_get_option' function:
- *
- * The 'wpsf_get_option' function is used to retrieve option values from the WPSF instance.
- * Here's how you can use it:
- *
- * - Call the 'wpsf_get_option' function with two parameters:
- *   1. $option_name: The name of the option you want to retrieve.
- *   2. $default (optional): The default value to return if the option is not set.
- *
- * Example:
- * Suppose you want to retrieve the 'site_description' option, and if it's not set, you want to
- * provide a default value of 'Default Site Description':
- *
- * $siteDescription = wpsf_get_option('site_description', 'Default Site Description');
- *
- * In this example, the 'wpsf_get_option' function is called with 'site_description' as the option name
- * and 'Default Site Description' as the default value. If 'site_description' is not set, the function
- * will return the default value.
- *
- * You can replace 'site_description' and 'Default Site Description' with your specific option name
- * and default value as needed.
- */
-add_action('wp_footer',function(){
-    // echo wpsf_get_option( 'site_description', 'My Default Data' );
-});
-
-
-/**
- * #2 Register Taxonomy Settings
- * 
- * Registers settings for custom taxonomies using the 'wpsf_register_taxonomy_settings' filter.
- *
- * This filter allows defining custom fields for taxonomies with specific types (e.g., text, checkbox, media).
- *
- * @param array $settings An associative array containing taxonomy settings and their respective fields.
- *                        Format: $settings['taxonomy_name'] = [ fields ];
- *                        Each field contains 'label', 'id', and 'type' keys.
- *                        Available types: 'media', 'checkbox', 'radio', 'select', 'textarea', 'wysiwyg', 'pages', 'categories', 'users'.
- *
- * @return array The modified array of taxonomy settings with added fields.
- */
-add_filter( 'wpsf_register_taxonomy_settings', function( $settings ){
-
-    // Define taxonomy settings and associated fields
-    $settings['post_tag'] = [
+    ] );
+    
+    // Create admin submenu for 'Tools'
+    $prefix = 'wpsf_tools_option';
+    WPSF::createAdminPage( $prefix, [
+        'page_title' => esc_html__( 'WPSF Tools', 'wpsf' ), 
+        'menu_title' => esc_html__( 'WPSF Tools', 'wpsf' ),
+        'menu_slug' => 'wpsf-tools-settings',
+        'parent' => 'tools.php',
+        'fields' => [
+            'general' => [
+                'label' => esc_html__( 'Post', 'wpsf' ),
+                'sections' => [
+                    'general' => [
+                       'label' => esc_html__( 'General Settings', 'wpsf' ),
+                       'fields' => [
+                            [
+                                'id' => 'before_content',
+                                'label' => esc_html__( 'Before Content', 'wpsf' ),
+                                'description' => esc_html__( 'Add custom content before the post', 'wpsf' ),
+                                'type' => 'wysiwyg',
+                            ],
+                            [
+                                'id' => 'after_content',
+                                'label' => esc_html__( 'After Content', 'wpsf' ),
+                                'description' => esc_html__( 'Add custom content after the post', 'wpsf' ),
+                                'type' => 'wysiwyg',
+                            ],
+                       ]
+                    ],
+                    'style' => [
+                       'label' => esc_html__( 'Post Title Color' ),
+                       'fields' => [
+                            [
+                                'id' => 'post_title_color',
+                                'label' => esc_html__( 'Post Title Color', 'wpsf' ),
+                                'description' => esc_html__( 'Select a color', 'wpsf' ),
+                                'type' => 'color',
+                            ],
+                       ]
+                    ]
+                ]
+            ],
+            'seo' => [
+                'label' => 'SEO',
+                'sections' =>[
+                    'general' => [
+                       'label' => esc_html__('General'),
+                       'fields' => [
+                            [
+                                'id' => 'site_title',
+                                'label' => esc_html__( 'Site Title', 'wpsf' ),
+                                'description' => esc_html__( 'Set site title', 'wpsf' ),
+                                'type' => 'text',
+                            ],
+                            [
+                                'id' => 'site_description',
+                                'label' => esc_html__( 'Site Description', 'wpsf' ),
+                                'description' => esc_html__( 'In a few words, explain what this site is about. Example: “Just another WordPress site.”', 'wpsf' ),
+                                'type' => 'textarea',
+                            ],
+                       ]
+                    ]
+                ]
+            ]
+        ]
+    ] );
+    
+    // Create Taxonomy custom fields for Post Tags
+    WPSF::createTaxonomyFields( 'post_tag', [
         [
-            'label' => 'Text Field',
+            'label' => esc_html__( 'Text Field', 'wpsf' ),
             'id' => 'text_field',
             'type' => 'text',
         ],
         [
-            'label' => 'Checkbox',
+            'label' => esc_html__( 'Checkbox', 'wpsf' ),
             'id' => 'checkbox_1',
             'type' => 'checkbox',
         ],
         [
-            'label' => 'Media',
+            'label' => esc_html__( 'Media', 'wpsf' ),
             'id' => 'media',
             'type' => 'media',
         ],
-        // Add more fields as needed for 'post_tag' or other taxonomies
-    ];
+    ] );
+}
 
-    return $settings;
 
-    // How can you get the datas?
+add_action('wp_footer',function(){
+    // How can you get the Option datas?
+    $prefix = 'wpsf_options';
+    $options = get_option( $prefix );
+    $field_one =  $options['field_one']; // print this if you want
+    
+    // How can you get the Taxonomy datas?
     // Get the current term/tag ID
     $term_id = 25; // Replace this with the actual term/tag ID
 
@@ -350,7 +236,5 @@ add_filter( 'wpsf_register_taxonomy_settings', function( $settings ){
     // Get the field data for 'media' (assuming it's an attachment ID)
     $media_id = get_term_meta($term_id, 'media', true);
     $media_url = wp_get_attachment_url($media_id);
-    
-    // Now you have the values of these custom fields associated with the specific term/tag.
+});
 
-}, 20 );

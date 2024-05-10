@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WPS Framework
  * Description: Create a custom settings page for your plugin or theme easily!
- * Version: 1.0
+ * Version: 1.2
  * Author: yakupseymen
  * Author URI: https://github.com/yakupseymen/
  * License: GPL v2 or later
@@ -27,8 +27,7 @@ define( 'WPSF_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WPSF_URL', plugin_dir_url( __FILE__ ) );
 define( 'WPSF_VERSION', get_file_data( __FILE__, array('Version' => 'Version'), false)['Version'] );
 
-
-// Load framework
+require_once WPSF_PATH . 'includes/autoloader.php';
 require_once WPSF_PATH . 'includes/framework.php';
 
 // Load example 
