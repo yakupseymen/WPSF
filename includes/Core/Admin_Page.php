@@ -20,6 +20,26 @@ class Admin_Page {
         add_action( 'admin_menu', [ $this, 'admin_menu' ] );
     }
 
+    public static function create( $prefix = 'wpsf', $args = array() ){
+
+        $defaults = array(
+            'page_title' => 'WPSF',
+            'menu_title' => 'WPSF',
+            'capability' => self::$capability,
+            'menu_slug' => 'wpsf',
+            'callback' => ['\WPSF\Core\Admin_Page', 'render_page'],
+            'icon' => 'dashicons-admin-settings',
+            'position' => 2,
+        );
+    
+        $args = wp_parse_args( $args, $defaults );
+
+        if ( isset( self::$args[$prefix] ) ) {
+            wp_die( "WPSF: You used same option name twice: <code>$prefix</code>" );
+        }
+        self::$args[$prefix] = $args;
+    }
+
     function admin_menu() {
         $args_array = self::$args;
 
@@ -98,26 +118,6 @@ class Admin_Page {
             }
         }
 	}
-
-    public static function create( $prefix = 'wpsf', $args = array() ){
-
-        $defaults = array(
-            'page_title' => 'WPSF',
-            'menu_title' => 'WPSF',
-            'capability' => self::$capability,
-            'menu_slug' => 'wpsf',
-            'callback' => ['\WPSF\Core\Admin_Page', 'render_page'],
-            'icon' => 'dashicons-admin-settings',
-            'position' => 2,
-        );
-    
-        $args = wp_parse_args( $args, $defaults );
-
-        if ( isset( self::$args[$prefix] ) ) {
-            wp_die( "WPSF: You used same option name twice: <code>$prefix</code>" );
-        }
-        self::$args[$prefix] = $args;
-    }
 
     static function render_page() {
 
