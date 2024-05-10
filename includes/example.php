@@ -198,17 +198,17 @@ WPSF::createAdminPage( $prefix, [
 // Create Taxonomy custom fields for Post Tags
 WPSF::createTaxonomyFields( 'post_tag', [
     [
-        'label' => 'Text Field',
+        'label' => esc_html__( 'Text Field', 'wpsf' ),
         'id' => 'text_field',
         'type' => 'text',
     ],
     [
-        'label' => 'Checkbox',
+        'label' => esc_html__( 'Checkbox', 'wpsf' ),
         'id' => 'checkbox_1',
         'type' => 'checkbox',
     ],
     [
-        'label' => 'Media',
+        'label' => esc_html__( 'Media', 'wpsf' ),
         'id' => 'media',
         'type' => 'media',
     ],
