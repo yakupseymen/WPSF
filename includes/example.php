@@ -1,7 +1,8 @@
 <?php 
 
-$prefix = 'wpsf_options';
 
+// Create admin page: My Settings
+$prefix = 'wpsf_options';
 \WPSF\Core\Admin_Page::create( $prefix, [
     'page_title' => esc_html__( 'My Settings', 'wpsf' ),
     'menu_title' => esc_html__( 'My Settings', 'wpsf' ),
@@ -63,39 +64,40 @@ $prefix = 'wpsf_options';
 	]
 ] );
 
+// Create admin submenu for 'My Settings'
 \WPSF\Core\Admin_Page::create( $prefix, [
-    'page_title' => __( 'Advanced', 'wpsf' ), 
-    'menu_title' => __( 'Advanced', 'wpsf' ),
+    'page_title' => esc_html__( 'Advanced', 'wpsf' ), 
+    'menu_title' => esc_html__( 'Advanced', 'wpsf' ),
     'menu_slug' => 'my-advanced-settings',
     'parent' => 'wpsf',
     'fields' => [
 		'general' => [
-            'label' => __( 'Post', 'wpsf' ),
+            'label' => esc_html__( 'Post', 'wpsf' ),
             'sections' => [
                 'general' => [
-                   'label' => __( 'General Settings', 'wpsf' ),
+                   'label' => esc_html__( 'General Settings', 'wpsf' ),
                    'fields' => [
                         [
                             'id' => 'before_content',
-                            'label' => __( 'Before Content', 'wpsf' ),
-                            'description' => __( 'Add custom content before the post', 'wpsf' ),
+                            'label' => esc_html__( 'Before Content', 'wpsf' ),
+                            'description' => esc_html__( 'Add custom content before the post', 'wpsf' ),
                             'type' => 'wysiwyg',
                         ],
                         [
                             'id' => 'after_content',
-                            'label' => __( 'After Content', 'wpsf' ),
-                            'description' => __( 'Add custom content after the post', 'wpsf' ),
+                            'label' => esc_html__( 'After Content', 'wpsf' ),
+                            'description' => esc_html__( 'Add custom content after the post', 'wpsf' ),
                             'type' => 'wysiwyg',
                         ],
                    ]
                 ],
                 'style' => [
-                   'label' => __( 'Post Title Color' ),
+                   'label' => esc_html__( 'Post Title Color' ),
                    'fields' => [
                         [
                             'id' => 'post_title_color',
-                            'label' => __( 'Post Title Color', 'wpsf' ),
-                            'description' => __( 'Select a color', 'wpsf' ),
+                            'label' => esc_html__( 'Post Title Color', 'wpsf' ),
+                            'description' => esc_html__( 'Select a color', 'wpsf' ),
                             'type' => 'color',
                         ],
                    ]
@@ -106,18 +108,18 @@ $prefix = 'wpsf_options';
             'label' => 'SEO',
             'sections' =>[
                 'general' => [
-                   'label' => __('General'),
+                   'label' => esc_html__('General'),
                    'fields' => [
                         [
                             'id' => 'site_title',
-                            'label' => __( 'Site Title', 'wpsf' ),
-                            'description' => __( 'Set site title', 'wpsf' ),
+                            'label' => esc_html__( 'Site Title', 'wpsf' ),
+                            'description' => esc_html__( 'Set site title', 'wpsf' ),
                             'type' => 'text',
                         ],
                         [
                             'id' => 'site_description',
-                            'label' => __( 'Site Description', 'wpsf' ),
-                            'description' => __( 'In a few words, explain what this site is about. Example: “Just another WordPress site.”', 'wpsf' ),
+                            'label' => esc_html__( 'Site Description', 'wpsf' ),
+                            'description' => esc_html__( 'In a few words, explain what this site is about. Example: “Just another WordPress site.”', 'wpsf' ),
                             'type' => 'textarea',
                         ],
                    ]
@@ -126,33 +128,6 @@ $prefix = 'wpsf_options';
         ]
 	]
 ] );
-
-
-\WPSF\Core\Admin_Page::create( $prefix . '_two', [
-    'page_title' => esc_html__( 'My Settings Two', 'wpsf' ),
-    'menu_title' => esc_html__( 'My Settings Two', 'wpsf' ),
-    'position' => 3,
-    'menu_slug' => 'wpsf_two',
-    'fields' => [
-		'general' => [
-            'label' => esc_html__( 'General', 'wpsf' ),
-            'sections' => [
-                'general' => [
-                   'label' => esc_html__( 'General Settings', 'wpsf' ),
-                   'fields' => [
-                        [
-                            'id' => 'field_ones',
-                            'label' => __( 'meta one', 'wpsf' ),
-                            'description' => __( 'This is a demo option', 'wpsf' ),
-                            'type' => 'text',
-                        ],
-                   ]
-                ],
-            ]
-        ],
-	]
-] );
-
 
 /**
  * Usage of the 'wpsf_get_option' function:

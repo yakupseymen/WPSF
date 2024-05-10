@@ -14,7 +14,6 @@ class Admin_Page {
     private static $args = array();
     private static $settings = array();
     private static $page_id;
-    private static $option_key = 'wpsf';
 
     function __construct() {
         add_action( 'admin_init', [ $this, 'settings_init' ] );
@@ -53,10 +52,11 @@ class Admin_Page {
         
 		// Register a new setting this page.
         foreach ( self::$args as $settings ) { 
+            $option_key = $settings['option_key'];
 
 			$page_id = 'wpsf_' . $settings['menu_slug'];
 
-			register_setting( $page_id, self::$option_key );
+			register_setting( $page_id, $option_key );
 
             $fields = $settings['fields'] ?? array();
 
@@ -89,6 +89,7 @@ class Admin_Page {
                                 'label_for' => $field['id'], /* The ID of the field. */
                                 'class' => 'custom_class', /* The class of the field. */
                                 'field' => $field, /* Custom data for the field. */
+                                'option_key' => $option_key,
                             ]
                         );
                     }
@@ -108,7 +109,8 @@ class Admin_Page {
             'menu_slug' => 'wpsf',
             'callback' => ['\WPSF\Core\Admin_Page', 'render_page'],
             'icon' => 'dashicons-admin-settings',
-            'position' => 2
+            'position' => 2,
+            'option_key' => $prefix
         );
     
         $args = wp_parse_args( $args, $defaults );
@@ -172,10 +174,10 @@ class Admin_Page {
 				<?php
 				
                 foreach ( self::$args as $settings ) {
-					
+
 					$hidden = false;
 					if ( $settings['menu_slug'] !== self::$page_id ) {
-						$hidden = true;
+                        $hidden = true;  
                     }
 
 					$page_id = 'wpsf_' . $settings['menu_slug'];
@@ -231,13 +233,14 @@ class Admin_Page {
 
 	static function render_field( array $args ) : void {
 		$field = $args['field'];
+        $option_key = $args['option_key'];
 
 		// Get the value of the setting we've registered with register_setting()
-		$options = get_option( self::$option_key );
+		$options = get_option( $option_key );
 
         $function = $field['type'];
         
-        Field::$function( $field, $options, self::$option_key );
+        Field::$function( $field, $options, $option_key );
 	}
 
 }
