@@ -128,6 +128,14 @@ final class WPSF {
 		new \WPSF\Core\Admin_Page;
 		new \WPSF\Core\Taxonomy;
     }
+
+	public static function createAdminPage( $prefix, $args ) {
+		\WPSF\Core\Admin_Page::create( $prefix, $args );
+	}
+
+	public static function createTaxonomyFields( $prefix, $args ) {
+		\WPSF\Core\Taxonomy::create( $prefix, $args );
+	}
     
 } // class
 WPSF::instance();

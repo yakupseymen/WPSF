@@ -1,9 +1,8 @@
 <?php 
 
-
 // Create admin page: My Settings
 $prefix = 'wpsf_options';
-\WPSF\Core\Admin_Page::create( $prefix, [
+WPSF::createAdminPage( $prefix, [
     'page_title' => esc_html__( 'My Settings', 'wpsf' ),
     'menu_title' => esc_html__( 'My Settings', 'wpsf' ),
     'menu_slug' => 'wpsf',
@@ -66,7 +65,7 @@ $prefix = 'wpsf_options';
 
 // Create admin submenu for 'My Settings'
 $prefix = 'wpsf_advanced_options';
-\WPSF\Core\Admin_Page::create( $prefix, [
+WPSF::createAdminPage( $prefix, [
     'page_title' => esc_html__( 'Advanced', 'wpsf' ), 
     'menu_title' => esc_html__( 'Advanced', 'wpsf' ),
     'menu_slug' => 'my-advanced-settings',
@@ -132,7 +131,7 @@ $prefix = 'wpsf_advanced_options';
 
 // Create admin submenu for 'Tools'
 $prefix = 'wpsf_tools_option';
-\WPSF\Core\Admin_Page::create( $prefix, [
+WPSF::createAdminPage( $prefix, [
     'page_title' => esc_html__( 'WPSF Tools', 'wpsf' ), 
     'menu_title' => esc_html__( 'WPSF Tools', 'wpsf' ),
     'menu_slug' => 'wpsf-tools-settings',
@@ -197,7 +196,7 @@ $prefix = 'wpsf_tools_option';
 ] );
 
 // Create Taxonomy custom fields for Post Tags
-\WPSF\Core\Taxonomy::create( 'post_tag', [
+WPSF::createTaxonomyFields( 'post_tag', [
     [
         'label' => 'Text Field',
         'id' => 'text_field',
@@ -214,8 +213,6 @@ $prefix = 'wpsf_tools_option';
         'type' => 'media',
     ],
 ] );
-
-
 
 add_action('wp_footer',function(){
     // How can you get the Option datas?
