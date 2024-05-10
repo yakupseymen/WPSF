@@ -65,11 +65,78 @@ $prefix = 'wpsf_options';
 ] );
 
 // Create admin submenu for 'My Settings'
+$prefix = 'wpsf_advanced_options';
 \WPSF\Core\Admin_Page::create( $prefix, [
     'page_title' => esc_html__( 'Advanced', 'wpsf' ), 
     'menu_title' => esc_html__( 'Advanced', 'wpsf' ),
     'menu_slug' => 'my-advanced-settings',
     'parent' => 'wpsf',
+    'fields' => [
+		'general' => [
+            'label' => esc_html__( 'Post', 'wpsf' ),
+            'sections' => [
+                'general' => [
+                   'label' => esc_html__( 'General Settings', 'wpsf' ),
+                   'fields' => [
+                        [
+                            'id' => 'before_content',
+                            'label' => esc_html__( 'Before Content', 'wpsf' ),
+                            'description' => esc_html__( 'Add custom content before the post', 'wpsf' ),
+                            'type' => 'wysiwyg',
+                        ],
+                        [
+                            'id' => 'after_content',
+                            'label' => esc_html__( 'After Content', 'wpsf' ),
+                            'description' => esc_html__( 'Add custom content after the post', 'wpsf' ),
+                            'type' => 'wysiwyg',
+                        ],
+                   ]
+                ],
+                'style' => [
+                   'label' => esc_html__( 'Post Title Color' ),
+                   'fields' => [
+                        [
+                            'id' => 'post_title_color',
+                            'label' => esc_html__( 'Post Title Color', 'wpsf' ),
+                            'description' => esc_html__( 'Select a color', 'wpsf' ),
+                            'type' => 'color',
+                        ],
+                   ]
+                ]
+            ]
+        ],
+        'seo' => [
+            'label' => 'SEO',
+            'sections' =>[
+                'general' => [
+                   'label' => esc_html__('General'),
+                   'fields' => [
+                        [
+                            'id' => 'site_title',
+                            'label' => esc_html__( 'Site Title', 'wpsf' ),
+                            'description' => esc_html__( 'Set site title', 'wpsf' ),
+                            'type' => 'text',
+                        ],
+                        [
+                            'id' => 'site_description',
+                            'label' => esc_html__( 'Site Description', 'wpsf' ),
+                            'description' => esc_html__( 'In a few words, explain what this site is about. Example: “Just another WordPress site.”', 'wpsf' ),
+                            'type' => 'textarea',
+                        ],
+                   ]
+                ]
+            ]
+        ]
+	]
+] );
+
+// Create admin submenu for 'Tools'
+$prefix = 'wpsf_tools_option';
+\WPSF\Core\Admin_Page::create( $prefix, [
+    'page_title' => esc_html__( 'WPSF Tools', 'wpsf' ), 
+    'menu_title' => esc_html__( 'WPSF Tools', 'wpsf' ),
+    'menu_slug' => 'wpsf-tools-settings',
+    'parent' => 'tools.php',
     'fields' => [
 		'general' => [
             'label' => esc_html__( 'Post', 'wpsf' ),

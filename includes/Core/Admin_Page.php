@@ -51,8 +51,7 @@ class Admin_Page {
     function settings_init() {
         
 		// Register a new setting this page.
-        foreach ( self::$args as $settings ) { 
-            $option_key = $settings['option_key'];
+        foreach ( self::$args as $option_key => $settings ) { 
 
 			$page_id = 'wpsf_' . $settings['menu_slug'];
 
@@ -110,12 +109,14 @@ class Admin_Page {
             'callback' => ['\WPSF\Core\Admin_Page', 'render_page'],
             'icon' => 'dashicons-admin-settings',
             'position' => 2,
-            'option_key' => $prefix
         );
     
         $args = wp_parse_args( $args, $defaults );
 
-        self::$args[] = $args;
+        if ( isset( self::$args[$prefix] ) ) {
+            wp_die( "WPSF: You used same option name twice: <code>$prefix</code>" );
+        }
+        self::$args[$prefix] = $args;
     }
 
     static function render_page() {
@@ -175,9 +176,8 @@ class Admin_Page {
 				
                 foreach ( self::$args as $settings ) {
 
-					$hidden = false;
 					if ( $settings['menu_slug'] !== self::$page_id ) {
-                        $hidden = true;  
+                        continue;
                     }
 
 					$page_id = 'wpsf_' . $settings['menu_slug'];
@@ -197,12 +197,8 @@ class Admin_Page {
     
                         $sanitized_tab_id = esc_attr( $tab_id );
     
-						if ( $hidden ) {
-							echo "<div style='display:none'>";
-						} else {
-							// PHPCS - $active_class is a non-dynamic string and $sanitized_tab_id is escaped above.
-							echo "<div id='tab-{$sanitized_tab_id}' class='wpsf-settings-form-page{$active_class}'>"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-						}
+                        // PHPCS - $active_class is a non-dynamic string and $sanitized_tab_id is escaped above.
+                        echo "<div id='tab-{$sanitized_tab_id}' class='wpsf-settings-form-page{$active_class}'>"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                         foreach ( $tab['sections'] as $section_id => $section ) {
                             $full_section_id = 'wpsf_' . $section_id . '_section';
     
