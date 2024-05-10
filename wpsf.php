@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WPS Framework
  * Description: Create a custom settings page for your plugin or theme easily!
- * Version: 1.0
+ * Version: 1.2
  * Author: yakupseymen
  * Author URI: https://github.com/yakupseymen/
  * License: GPL v2 or later
