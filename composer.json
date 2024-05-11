@@ -1,0 +1,19 @@
+{
+    "name": "yakupseymen/wpsf",
+    "description": "WordPress Settings Framework. Create a custom settings page for your plugin or theme easily!",
+    "homepage": "https://github.com/yakupseymen/WPSF",
+    "license": "GPL-2.0-or-later",
+    "keywords": ["wordpress","Framework","wordpress-api"],
+    "require": {
+        "php": ">=8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "WPSF\\": "src"
+        }
+    },
+    "support": {
+		"issues": "https://github.com/yakupseymen/WPSF/issues",
+		"source": "https://github.com/yakupseymen/WPSF"
+	}
+}
