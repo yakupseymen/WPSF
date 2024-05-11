@@ -15,5 +15,7 @@
     "support": {
 		"issues": "https://github.com/yakupseymen/WPSF/issues",
 		"source": "https://github.com/yakupseymen/WPSF"
-	}
+	},
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
